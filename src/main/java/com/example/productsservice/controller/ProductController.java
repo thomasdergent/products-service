@@ -14,6 +14,11 @@ public class ProductController {
     @Autowired
     private ProductRepository productRepository;
 
+    @GetMapping("product/{articleNumber")
+    public Product getProductByArticleNumber(@PathVariable String articleNumber) {
+        return this.productRepository.findProductByArticleNumber(articleNumber);
+    }
+
     @GetMapping("/products")
     public List<Product> getAllProducts() {
         return this.productRepository.findAll();
@@ -43,28 +48,28 @@ public class ProductController {
         return product;
     }
 
-    @PutMapping("/product")
-    public Product updateProduct(@RequestBody Product updatedProduct) {
-        Product retrivedProduct = productRepository.findProductsByStoreNameAndArticleNumber(updatedProduct.getStoreName(), updatedProduct.getArticleNumber());
+//    @PutMapping("/product")
+//    public Product updateProduct(@RequestBody Product updatedProduct) {
+//        Product retrivedProduct = productRepository.findProductsByStoreNameAndArticleNumber(updatedProduct.getStoreName(), updatedProduct.getArticleNumber());
+//
+//        retrivedProduct.setStoreName((updatedProduct.getStoreName()));
+//        retrivedProduct.setName((updatedProduct.getName()));
+//        retrivedProduct.setCategory((updatedProduct.getCategory()));
+//        retrivedProduct.setArticleNumber((updatedProduct.getArticleNumber()));
+//        retrivedProduct.setDelivery((updatedProduct.getDelivery()));
+//        retrivedProduct.setMaterial((updatedProduct.getMaterial()));
+//        retrivedProduct.setMaintenance(updatedProduct.getMaintenance());
+//        retrivedProduct.setEnvironment((updatedProduct.getEnvironment()));
+//        retrivedProduct.setStock((updatedProduct.getStock()));
+//        retrivedProduct.setPrice((updatedProduct.getPrice()));
+//        retrivedProduct.setSize((updatedProduct.getSize()));
+//
+//        productRepository.save(retrivedProduct);
+//
+//        return retrivedProduct;
+//    }
 
-        retrivedProduct.setStoreName((updatedProduct.getStoreName()));
-        retrivedProduct.setName((updatedProduct.getName()));
-        retrivedProduct.setCategory((updatedProduct.getCategory()));
-        retrivedProduct.setArticleNumber((updatedProduct.getArticleNumber()));
-        retrivedProduct.setDelivery((updatedProduct.getDelivery()));
-        retrivedProduct.setMaterial((updatedProduct.getMaterial()));
-        retrivedProduct.setMaintenance(updatedProduct.getMaintenance());
-        retrivedProduct.setEnvironment((updatedProduct.getEnvironment()));
-        retrivedProduct.setStock((updatedProduct.getStock()));
-        retrivedProduct.setPrice((updatedProduct.getPrice()));
-        retrivedProduct.setSize((updatedProduct.getSize()));
-
-        productRepository.save(retrivedProduct);
-
-        return retrivedProduct;
-    }
-
-    @PutMapping("/edit/{storeName}/article/{articleNumber}")
+    @PutMapping("/store/{storeName}/article/{articleNumber}")
     public Product edit(@PathVariable String storeName, @PathVariable String articleNumber, @RequestBody Product updatedProduct) {
         Product retrivedProduct = productRepository.findProductsByStoreNameAndArticleNumber(storeName, articleNumber);
 
