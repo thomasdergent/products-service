@@ -44,7 +44,7 @@ public class ProductController {
         return productRepository.findProductsByStoreName(storeName);
     }
 
-    //Get all procuts from specific category
+    //Get all products from specific category
     @GetMapping("/store/{storeName}/category/{category}")
     public List<Product> getProductsByCategory(@PathVariable String storeName, @PathVariable String category) {
 
