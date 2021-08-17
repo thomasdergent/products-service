@@ -50,7 +50,7 @@ jobs:
       - name: Upload Maven build artifact
         uses: actions/upload-artifact@v1
         with:
-          name: review-service-artifact.jar
+          name: product-service-artifact.jar
           path: ./target/product-service-0.0.1-SNAPSHOT.jar
 
       - name: Docker login
@@ -61,4 +61,3 @@ jobs:
 
       - name: Upload container to Docker Hub with Push
         run: docker push ${{ secrets.DOCKER_USER }}/product-service:latest
-        #test
