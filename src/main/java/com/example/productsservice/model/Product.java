@@ -11,6 +11,8 @@ public class Product {
     private String storeName;
     private String name;
     private String category;
+    private String description;
+    private String image;
     private String articleNumber;
     private Boolean delivery;
     private String material;
@@ -23,10 +25,12 @@ public class Product {
     public Product() {
     }
 
-    public Product(String storeName, String name, String category, String articleNumber, Boolean delivery, String material, String maintenance, String environment, int stock, double price, String size) {
+    public Product(String storeName, String name, String category, String description, String image, String articleNumber, Boolean delivery, String material, String maintenance, String environment, int stock, double price, String size) {
         setStoreName(storeName);
         setName(name);
         setCategory(category);
+        setDescription(description);
+        setImage(image);
         setArticleNumber(articleNumber);
         setDelivery(delivery);
         setMaterial(material);
@@ -69,6 +73,21 @@ public class Product {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public String getDescription(){
+        return description;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+    public String getImage(){
+        return image;
+    }
+
 
     public String getArticleNumber(){
         return articleNumber;

@@ -36,7 +36,7 @@ public class ProductsControllerUnitTests {
     @Test
     public void whenGetProductByStoreNameAndArticleNumber_thenReturnJsonProduct() throws Exception {
 
-        Product productStore1Category1 = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
+        Product productStore1Category1 = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel", "omschrijving", "afbeelding", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
 
         given(productrepository.findProductsByStoreNameAndArticleNumber("IKEA Hasselt", "unitTest123")).willReturn(productStore1Category1);
 
@@ -46,6 +46,8 @@ public class ProductsControllerUnitTests {
                 .andExpect(jsonPath("$.storeName", is("IKEA Hasselt")))
                 .andExpect(jsonPath("$.name", is("Linmon chair")))
                 .andExpect(jsonPath("$.category", is("Bureaustoel")))
+                .andExpect(jsonPath("$.description", is("omschrijving")))
+                .andExpect(jsonPath("$.image", is("afbeelding")))
                 .andExpect(jsonPath("$.articleNumber", is("unitTest123")))
                 .andExpect(jsonPath("$.delivery", is(true)))
                 .andExpect(jsonPath("$.material", is("Leer")))
@@ -59,8 +61,8 @@ public class ProductsControllerUnitTests {
     @Test
     public void whenGetProductByStoreName_thenReturnJsonProducts() throws Exception {
 
-        Product productStore1Category1 = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
-        Product productStore1Category2 = new Product("IKEA Hasselt", "Linmon desk", "Bureau", "unitTest456", true, "Hout", "Vochtbestendig", "Recycleerbaar", 600, 75.00, "140cmx80cm");
+        Product productStore1Category1 = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel", "omschrijving", "afbeelding", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
+        Product productStore1Category2 = new Product("IKEA Hasselt", "Linmon desk", "Bureau", "omschrijving", "afbeelding", "unitTest456", true, "Hout", "Vochtbestendig", "Recycleerbaar", 600, 75.00, "140cmx80cm");
 
         List<Product> productList = new ArrayList<>();
         productList.add(productStore1Category1);
@@ -74,6 +76,8 @@ public class ProductsControllerUnitTests {
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name", is("Linmon chair")))
                 .andExpect(jsonPath("$[0].category", is("Bureaustoel")))
+                .andExpect(jsonPath("$[0].description", is("omschrijving")))
+                .andExpect(jsonPath("$[0].image", is("afbeelding")))
                 .andExpect(jsonPath("$[0].articleNumber", is("unitTest123")))
                 .andExpect(jsonPath("$[0].delivery", is(true)))
                 .andExpect(jsonPath("$[0].material", is("Leer")))
@@ -84,6 +88,8 @@ public class ProductsControllerUnitTests {
                 .andExpect(jsonPath("$[0].size", is("130cm")))
                 .andExpect(jsonPath("$[1].name", is("Linmon desk")))
                 .andExpect(jsonPath("$[1].category", is("Bureau")))
+                .andExpect(jsonPath("$[1].description", is("omschrijving")))
+                .andExpect(jsonPath("$[1].image", is("afbeelding")))
                 .andExpect(jsonPath("$[1].articleNumber", is("unitTest456")))
                 .andExpect(jsonPath("$[1].delivery", is(true)))
                 .andExpect(jsonPath("$[1].material", is("Hout")))
@@ -97,8 +103,8 @@ public class ProductsControllerUnitTests {
     @Test
     public void whenGetProductsByStoreNameAndCategory_thenReturnJsonProducts() throws Exception {
 
-        Product productStore1Category1 = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
-        Product productStore1Category2 = new Product("IKEA Hasselt", "Alexa chair", "Bureaustoel", "unitTest456", true, "Stof", "Spray", "Recycleerbaar", 600, 75.00, "140cm");
+        Product productStore1Category1 = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel",  "omschrijving", "afbeelding", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
+        Product productStore1Category2 = new Product("IKEA Hasselt", "Alexa chair", "Bureaustoel","omschrijving", "afbeelding", "unitTest456", true, "Stof", "Spray", "Recycleerbaar", 600, 75.00, "140cm");
 
         List<Product> productList = new ArrayList<>();
         productList.add(productStore1Category1);
@@ -112,6 +118,8 @@ public class ProductsControllerUnitTests {
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name", is("Linmon chair")))
                 .andExpect(jsonPath("$[0].category", is("Bureaustoel")))
+                .andExpect(jsonPath("$[0].description", is("omschrijving")))
+                .andExpect(jsonPath("$[0].image", is("afbeelding")))
                 .andExpect(jsonPath("$[0].articleNumber", is("unitTest123")))
                 .andExpect(jsonPath("$[0].delivery", is(true)))
                 .andExpect(jsonPath("$[0].material", is("Leer")))
@@ -122,6 +130,8 @@ public class ProductsControllerUnitTests {
                 .andExpect(jsonPath("$[0].size", is("130cm")))
                 .andExpect(jsonPath("$[1].name", is("Alexa chair")))
                 .andExpect(jsonPath("$[1].category", is("Bureaustoel")))
+                .andExpect(jsonPath("$[1].description", is("omschrijving")))
+                .andExpect(jsonPath("$[1].image", is("afbeelding")))
                 .andExpect(jsonPath("$[1].articleNumber", is("unitTest456")))
                 .andExpect(jsonPath("$[1].delivery", is(true)))
                 .andExpect(jsonPath("$[1].material", is("Stof")))
@@ -135,7 +145,7 @@ public class ProductsControllerUnitTests {
     @Test
     public void whenPostProduct_thenReturnJsonProduct() throws Exception {
 
-        Product productStore1Category3 = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel", "123unitTest", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
+        Product productStore1Category3 = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel","omschrijving", "afbeelding", "123unitTest", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
 
         mockMvc.perform(post("/product")
                 .content(mapper.writeValueAsString(productStore1Category3))
@@ -145,6 +155,8 @@ public class ProductsControllerUnitTests {
                 .andExpect(jsonPath("$.storeName", is("IKEA Hasselt")))
                 .andExpect(jsonPath("$.name", is("Linmon chair")))
                 .andExpect(jsonPath("$.category", is("Bureaustoel")))
+                .andExpect(jsonPath("$.description", is("omschrijving")))
+                .andExpect(jsonPath("$.image", is("afbeelding")))
                 .andExpect(jsonPath("$.articleNumber", is("123unitTest")))
                 .andExpect(jsonPath("$.delivery", is(true)))
                 .andExpect(jsonPath("$.material", is("Leer")))
@@ -157,11 +169,11 @@ public class ProductsControllerUnitTests {
 
     @Test
     public void givenProductForStoreAndArticleNumber_whenPutProductForStoreAndArticleNumber_thenReturnJsonProduct() throws Exception {
-        Product productStore1Category1 = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
+        Product productStore1Category1 = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel","omschrijving", "afbeelding", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
 
         given(productrepository.findProductsByStoreNameAndArticleNumber("IKEA Hasselt", "unitTest123")).willReturn(productStore1Category1);
 
-        Product updatedProduct = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 100, 200.00, "130cm");
+        Product updatedProduct = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel","omschrijving", "afbeelding", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 100, 200.00, "130cm");
 
         mockMvc.perform(put("/store/" + productStore1Category1.getStoreName() + "/article/" + productStore1Category1.getArticleNumber())
                 .content(mapper.writeValueAsString(updatedProduct))
@@ -171,6 +183,8 @@ public class ProductsControllerUnitTests {
                 .andExpect(jsonPath("$.storeName", is("IKEA Hasselt")))
                 .andExpect(jsonPath("$.name", is("Linmon chair")))
                 .andExpect(jsonPath("$.category", is("Bureaustoel")))
+                .andExpect(jsonPath("$.description", is("omschrijving")))
+                .andExpect(jsonPath("$.image", is("afbeelding")))
                 .andExpect(jsonPath("$.articleNumber", is("unitTest123")))
                 .andExpect(jsonPath("$.delivery", is(true)))
                 .andExpect(jsonPath("$.material", is("Leer")))
@@ -183,7 +197,7 @@ public class ProductsControllerUnitTests {
 
     @Test
     public void givenProductForStoreAndArticleNumber_whenDeleteProductForStoreAndArticleNumber_thenStatusOk() throws Exception {
-        Product productToBeDeleted = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel", "delete", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
+        Product productToBeDeleted = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel","omschrijving", "afbeelding", "delete", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
 
 
         given(productrepository.findProductsByStoreNameAndArticleNumber("IKEA Hasselt", "delete")).willReturn(productToBeDeleted);

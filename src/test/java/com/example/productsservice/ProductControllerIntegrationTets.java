@@ -28,11 +28,11 @@ public class ProductControllerIntegrationTets {
     @Autowired
     private ProductRepository productRepository;
 
-    private Product product1Store1 = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel", "integration123", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
-    private Product product2Store1 = new Product("IKEA Hasselt", "Linmon desk", "Bureau", "integration456", true, "Hout", "Vochtbestendig", "Recycleerbaar", 600, 75.00, "140cmx80cm");
-    private Product product3Store2 = new Product("IKEA Wilrijk", "Linmon desk", "Bureau", "123integration", true, "Hout", "Vochtbestendig", "Recycleerbaar", 600, 75.00, "140cmx80cm");
+    private Product product1Store1 = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel", "omschrijving", "afbeelding", "integration123", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
+    private Product product2Store1 = new Product("IKEA Hasselt", "Linmon desk", "Bureau", "omschrijving", "afbeelding", "integration456", true, "Hout", "Vochtbestendig", "Recycleerbaar", 600, 75.00, "140cmx80cm");
+    private Product product3Store2 = new Product("IKEA Wilrijk", "Linmon desk", "Bureau", "omschrijving", "afbeelding", "123integration", true, "Hout", "Vochtbestendig", "Recycleerbaar", 600, 75.00, "140cmx80cm");
 
-    private Product productToBeDeleted = new Product("IKEA Wilrijk", "Alexa desk", "Bureau", "456integration", true, "Hout", "Vochtbestendig", "Recycleerbaar", 600, 99.99, "150cmx80cm");
+    private Product productToBeDeleted = new Product("IKEA Wilrijk", "Alexa desk", "Bureau", "omschrijving", "afbeelding", "456integration", true, "Hout", "Vochtbestendig", "Recycleerbaar", 600, 99.99, "150cmx80cm");
 
     @BeforeEach
     public void beforeAllTests() {
@@ -60,6 +60,8 @@ public class ProductControllerIntegrationTets {
                 .andExpect(jsonPath("$.storeName", is("IKEA Hasselt")))
                 .andExpect(jsonPath("$.name", is("Linmon chair")))
                 .andExpect(jsonPath("$.category", is("Bureaustoel")))
+                .andExpect(jsonPath("$.description", is("omschrijving")))
+                .andExpect(jsonPath("$.image", is("afbeelding")))
                 .andExpect(jsonPath("$.articleNumber", is("integration123")))
                 .andExpect(jsonPath("$.delivery", is(true)))
                 .andExpect(jsonPath("$.material", is("Leer")))
@@ -83,6 +85,8 @@ public class ProductControllerIntegrationTets {
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].name", is("Linmon chair")))
                 .andExpect(jsonPath("$[0].category", is("Bureaustoel")))
+                .andExpect(jsonPath("$[0].description", is("omschrijving")))
+                .andExpect(jsonPath("$[0].image", is("afbeelding")))
                 .andExpect(jsonPath("$[0].articleNumber", is("integration123")))
                 .andExpect(jsonPath("$[0].delivery", is(true)))
                 .andExpect(jsonPath("$[0].material", is("Leer")))
@@ -93,6 +97,8 @@ public class ProductControllerIntegrationTets {
                 .andExpect(jsonPath("$[0].size", is("130cm")))
                 .andExpect(jsonPath("$[1].name", is("Linmon desk")))
                 .andExpect(jsonPath("$[1].category", is("Bureau")))
+                .andExpect(jsonPath("$[1].description", is("omschrijving")))
+                .andExpect(jsonPath("$[1].image", is("afbeelding")))
                 .andExpect(jsonPath("$[1].articleNumber", is("integration456")))
                 .andExpect(jsonPath("$[1].delivery", is(true)))
                 .andExpect(jsonPath("$[1].material", is("Hout")))
@@ -115,6 +121,8 @@ public class ProductControllerIntegrationTets {
                 .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].name", is("Linmon chair")))
                 .andExpect(jsonPath("$[0].category", is("Bureaustoel")))
+                .andExpect(jsonPath("$[0].description", is("omschrijving")))
+                .andExpect(jsonPath("$[0].image", is("afbeelding")))
                 .andExpect(jsonPath("$[0].articleNumber", is("integration123")))
                 .andExpect(jsonPath("$[0].delivery", is(true)))
                 .andExpect(jsonPath("$[0].material", is("Leer")))
@@ -128,7 +136,7 @@ public class ProductControllerIntegrationTets {
     @Test
     public void whenPostProduct_thenReturnJsonProduct() throws Exception {
 
-        Product product3Store1 = new Product("IKEA Hasselt", "Alexa desk", "Bureau", "11integration11", true, "Hout", "Vochtbestendig", "Recycleerbaar", 600, 99.99, "150cmx80cm");
+        Product product3Store1 = new Product("IKEA Hasselt", "Alexa desk", "Bureau", "omschrijving", "afbeelding", "11integration11", true, "Hout", "Vochtbestendig", "Recycleerbaar", 600, 99.99, "150cmx80cm");
 
         mockMvc.perform(post("/product")
                 .content(mapper.writeValueAsString(product3Store1))
@@ -138,6 +146,8 @@ public class ProductControllerIntegrationTets {
                 .andExpect(jsonPath("$.storeName", is("IKEA Hasselt")))
                 .andExpect(jsonPath("$.name", is("Alexa desk")))
                 .andExpect(jsonPath("$.category", is("Bureau")))
+                .andExpect(jsonPath("$.description", is("omschrijving")))
+                .andExpect(jsonPath("$.image", is("afbeelding")))
                 .andExpect(jsonPath("$.articleNumber", is("11integration11")))
                 .andExpect(jsonPath("$.delivery", is(true)))
                 .andExpect(jsonPath("$.material", is("Hout")))
@@ -151,7 +161,7 @@ public class ProductControllerIntegrationTets {
     @Test
     public void givenProduct_whenPutProductByStoreNameAndArticleNumber_thenReturnJsonReview() throws Exception {
 
-        Product updatedProduct = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel", "integration123", true, "Leer", "Spray", "Recycleerbaar", 100, 200.00, "130cm");
+        Product updatedProduct = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel", "omschrijving", "afbeelding", "integration123", true, "Leer", "Spray", "Recycleerbaar", 100, 200.00, "130cm");
 
         mockMvc.perform(put("/store/{storeName}/article/{articleNumber}", product1Store1.getStoreName(), product1Store1.getArticleNumber())
                 .content(mapper.writeValueAsString(updatedProduct))
@@ -161,6 +171,8 @@ public class ProductControllerIntegrationTets {
                 .andExpect(jsonPath("$.storeName", is("IKEA Hasselt")))
                 .andExpect(jsonPath("$.name", is("Linmon chair")))
                 .andExpect(jsonPath("$.category", is("Bureaustoel")))
+                .andExpect(jsonPath("$.description", is("omschrijving")))
+                .andExpect(jsonPath("$.image", is("afbeelding")))
                 .andExpect(jsonPath("$.articleNumber", is("integration123")))
                 .andExpect(jsonPath("$.delivery", is(true)))
                 .andExpect(jsonPath("$.material", is("Leer")))

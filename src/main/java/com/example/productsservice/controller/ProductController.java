@@ -1,5 +1,6 @@
 package com.example.productsservice.controller;
 
+
 import com.example.productsservice.model.Product;
 import com.example.productsservice.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,6 +114,8 @@ public class ProductController {
         retrivedProduct.setStoreName(updatedProduct.getStoreName());
         retrivedProduct.setName((updatedProduct.getName()));
         retrivedProduct.setCategory((updatedProduct.getCategory()));
+        retrivedProduct.setDescription((updatedProduct.getDescription()));
+        retrivedProduct.setImage((updatedProduct.getImage()));
         retrivedProduct.setArticleNumber((updatedProduct.getArticleNumber()));
         retrivedProduct.setDelivery((updatedProduct.getDelivery()));
         retrivedProduct.setMaterial((updatedProduct.getMaterial()));
