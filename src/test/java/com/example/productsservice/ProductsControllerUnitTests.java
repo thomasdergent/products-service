@@ -34,16 +34,15 @@ public class ProductsControllerUnitTests {
     private ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    public void whenGetProductByStoreNameAndArticleNumber_thenReturnJsonProduct() throws Exception {
+    public void givenProduct_whenGetProductByArticleNumber_thenReturnJsonProduct() throws Exception {
 
-        Product productStore1Category1 = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel", "omschrijving", "afbeelding", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
+        Product product1 = new Product("Linmon chair", "Bureaustoel", "omschrijving", "afbeelding", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 200.00, "130cm");
 
-        given(productrepository.findProductsByStoreNameAndArticleNumber("IKEA Hasselt", "unitTest123")).willReturn(productStore1Category1);
+        given(productrepository.findProductsByArticleNumber("unitTest123")).willReturn(product1);
 
-        mockMvc.perform(get("/store/{storeName}/article/{articleNumber}", "IKEA Hasselt", "unitTest123"))
+        mockMvc.perform(get("/product/{articleNumber}",  "unitTest123"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.storeName", is("IKEA Hasselt")))
                 .andExpect(jsonPath("$.name", is("Linmon chair")))
                 .andExpect(jsonPath("$.category", is("Bureaustoel")))
                 .andExpect(jsonPath("$.description", is("omschrijving")))
@@ -53,24 +52,23 @@ public class ProductsControllerUnitTests {
                 .andExpect(jsonPath("$.material", is("Leer")))
                 .andExpect(jsonPath("$.maintenance", is("Spray")))
                 .andExpect(jsonPath("$.environment", is("Recycleerbaar")))
-                .andExpect(jsonPath("$.stock", is(500)))
                 .andExpect(jsonPath("$.price", is(200.00)))
                 .andExpect(jsonPath("$.size", is("130cm")));
     }
 
     @Test
-    public void whenGetProductByStoreName_thenReturnJsonProducts() throws Exception {
+    public void givenProduct_whenGetProducts_thenReturnJsonProducts() throws Exception {
 
-        Product productStore1Category1 = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel", "omschrijving", "afbeelding", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
-        Product productStore1Category2 = new Product("IKEA Hasselt", "Linmon desk", "Bureau", "omschrijving", "afbeelding", "unitTest456", true, "Hout", "Vochtbestendig", "Recycleerbaar", 600, 75.00, "140cmx80cm");
+        Product product1 = new Product("Linmon chair", "Bureaustoel", "omschrijving", "afbeelding", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 200.00, "130cm");
+        Product product2 = new Product("Linmon desk", "Bureau", "omschrijving", "afbeelding", "unitTest456", true, "Hout", "Vochtbestendig", "Recycleerbaar", 75.00, "140cmx80cm");
 
         List<Product> productList = new ArrayList<>();
-        productList.add(productStore1Category1);
-        productList.add(productStore1Category2);
+        productList.add(product1);
+        productList.add(product2);
 
-        given(productrepository.findProductsByStoreName("IKEA Hasselt")).willReturn(productList);
+        given(productrepository.findAll()).willReturn(productList);
 
-        mockMvc.perform(get("/products/{storeName}", "IKEA Hasselt"))
+        mockMvc.perform(get("/products"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
@@ -83,7 +81,6 @@ public class ProductsControllerUnitTests {
                 .andExpect(jsonPath("$[0].material", is("Leer")))
                 .andExpect(jsonPath("$[0].maintenance", is("Spray")))
                 .andExpect(jsonPath("$[0].environment", is("Recycleerbaar")))
-                .andExpect(jsonPath("$[0].stock", is(500)))
                 .andExpect(jsonPath("$[0].price", is(200.00)))
                 .andExpect(jsonPath("$[0].size", is("130cm")))
                 .andExpect(jsonPath("$[1].name", is("Linmon desk")))
@@ -95,24 +92,23 @@ public class ProductsControllerUnitTests {
                 .andExpect(jsonPath("$[1].material", is("Hout")))
                 .andExpect(jsonPath("$[1].maintenance", is("Vochtbestendig")))
                 .andExpect(jsonPath("$[1].environment", is("Recycleerbaar")))
-                .andExpect(jsonPath("$[1].stock", is(600)))
                 .andExpect(jsonPath("$[1].price", is(75.00)))
                 .andExpect(jsonPath("$[1].size", is("140cmx80cm")));
     }
 
     @Test
-    public void whenGetProductsByStoreNameAndCategory_thenReturnJsonProducts() throws Exception {
+    public void givenProduct_whenGetProductsByCategory_thenReturnJsonProducts() throws Exception {
 
-        Product productStore1Category1 = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel",  "omschrijving", "afbeelding", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
-        Product productStore1Category2 = new Product("IKEA Hasselt", "Alexa chair", "Bureaustoel","omschrijving", "afbeelding", "unitTest456", true, "Stof", "Spray", "Recycleerbaar", 600, 75.00, "140cm");
+        Product product1 = new Product("Linmon chair", "Bureaustoel",  "omschrijving", "afbeelding", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 200.00, "130cm");
+        Product product2 = new Product("Alexa chair", "Bureaustoel","omschrijving", "afbeelding", "unitTest456", true, "Stof", "Spray", "Recycleerbaar", 75.00, "140cm");
 
         List<Product> productList = new ArrayList<>();
-        productList.add(productStore1Category1);
-        productList.add(productStore1Category2);
+        productList.add(product1);
+        productList.add(product2);
 
-        given(productrepository.findProductByStoreNameAndAndCategory("IKEA Hasselt", "Bureaustoel")).willReturn(productList);
+        given(productrepository.findProductsByCategory("Bureaustoel")).willReturn(productList);
 
-        mockMvc.perform(get("/store/{storeName}/category/{category}", "IKEA Hasselt", "Bureaustoel"))
+        mockMvc.perform(get("/products/category/{category}", "Bureaustoel"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
@@ -125,7 +121,6 @@ public class ProductsControllerUnitTests {
                 .andExpect(jsonPath("$[0].material", is("Leer")))
                 .andExpect(jsonPath("$[0].maintenance", is("Spray")))
                 .andExpect(jsonPath("$[0].environment", is("Recycleerbaar")))
-                .andExpect(jsonPath("$[0].stock", is(500)))
                 .andExpect(jsonPath("$[0].price", is(200.00)))
                 .andExpect(jsonPath("$[0].size", is("130cm")))
                 .andExpect(jsonPath("$[1].name", is("Alexa chair")))
@@ -137,7 +132,6 @@ public class ProductsControllerUnitTests {
                 .andExpect(jsonPath("$[1].material", is("Stof")))
                 .andExpect(jsonPath("$[1].maintenance", is("Spray")))
                 .andExpect(jsonPath("$[1].environment", is("Recycleerbaar")))
-                .andExpect(jsonPath("$[1].stock", is(600)))
                 .andExpect(jsonPath("$[1].price", is(75.00)))
                 .andExpect(jsonPath("$[1].size", is("140cm")));
     }
@@ -145,14 +139,13 @@ public class ProductsControllerUnitTests {
     @Test
     public void whenPostProduct_thenReturnJsonProduct() throws Exception {
 
-        Product productStore1Category3 = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel","omschrijving", "afbeelding", "123unitTest", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
+        Product product3 = new Product("Linmon chair", "Bureaustoel","omschrijving", "afbeelding", "123unitTest", true, "Leer", "Spray", "Recycleerbaar", 200.00, "130cm");
 
         mockMvc.perform(post("/product")
-                .content(mapper.writeValueAsString(productStore1Category3))
+                .content(mapper.writeValueAsString(product3))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.storeName", is("IKEA Hasselt")))
                 .andExpect(jsonPath("$.name", is("Linmon chair")))
                 .andExpect(jsonPath("$.category", is("Bureaustoel")))
                 .andExpect(jsonPath("$.description", is("omschrijving")))
@@ -162,25 +155,23 @@ public class ProductsControllerUnitTests {
                 .andExpect(jsonPath("$.material", is("Leer")))
                 .andExpect(jsonPath("$.maintenance", is("Spray")))
                 .andExpect(jsonPath("$.environment", is("Recycleerbaar")))
-                .andExpect(jsonPath("$.stock", is(500)))
                 .andExpect(jsonPath("$.price", is(200.00)))
                 .andExpect(jsonPath("$.size", is("130cm")));
     }
 
     @Test
-    public void givenProductForStoreAndArticleNumber_whenPutProductForStoreAndArticleNumber_thenReturnJsonProduct() throws Exception {
-        Product productStore1Category1 = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel","omschrijving", "afbeelding", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
+    public void givenProduct_whenPutProductByArticleNumber_thenReturnJsonProduct() throws Exception {
+        Product product1 = new Product("Linmon chair", "Bureaustoel","omschrijving", "afbeelding", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 200.00, "130cm");
 
-        given(productrepository.findProductsByStoreNameAndArticleNumber("IKEA Hasselt", "unitTest123")).willReturn(productStore1Category1);
+        given(productrepository.findProductsByArticleNumber("unitTest123")).willReturn(product1);
 
-        Product updatedProduct = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel","omschrijving", "afbeelding", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 100, 200.00, "130cm");
+        Product updatedProduct = new Product("Linmon chair", "Bureaustoel","omschrijving", "afbeelding", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 200.00, "130cm");
 
-        mockMvc.perform(put("/store/" + productStore1Category1.getStoreName() + "/article/" + productStore1Category1.getArticleNumber())
+        mockMvc.perform(put("/product/" + product1.getArticleNumber())
                 .content(mapper.writeValueAsString(updatedProduct))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.storeName", is("IKEA Hasselt")))
                 .andExpect(jsonPath("$.name", is("Linmon chair")))
                 .andExpect(jsonPath("$.category", is("Bureaustoel")))
                 .andExpect(jsonPath("$.description", is("omschrijving")))
@@ -190,28 +181,27 @@ public class ProductsControllerUnitTests {
                 .andExpect(jsonPath("$.material", is("Leer")))
                 .andExpect(jsonPath("$.maintenance", is("Spray")))
                 .andExpect(jsonPath("$.environment", is("Recycleerbaar")))
-                .andExpect(jsonPath("$.stock", is(100)))
                 .andExpect(jsonPath("$.price", is(200.00)))
                 .andExpect(jsonPath("$.size", is("130cm")));
     }
 
     @Test
-    public void givenProductForStoreAndArticleNumber_whenDeleteProductForStoreAndArticleNumber_thenStatusOk() throws Exception {
-        Product productToBeDeleted = new Product("IKEA Hasselt", "Linmon chair", "Bureaustoel","omschrijving", "afbeelding", "delete", true, "Leer", "Spray", "Recycleerbaar", 500, 200.00, "130cm");
+    public void givenProduct_whenDeleteProductByArticleNumber_thenStatusOk() throws Exception {
+        Product productToBeDeleted = new Product("Linmon chair", "Bureaustoel","omschrijving", "afbeelding", "delete", true, "Leer", "Spray", "Recycleerbaar", 200.00, "130cm");
 
 
-        given(productrepository.findProductsByStoreNameAndArticleNumber("IKEA Hasselt", "delete")).willReturn(productToBeDeleted);
+        given(productrepository.findProductsByArticleNumber("delete")).willReturn(productToBeDeleted);
 
-        mockMvc.perform(delete("/product/store/" + productToBeDeleted.getStoreName() + "/article/" + productToBeDeleted.getArticleNumber())
+        mockMvc.perform(delete("/product/" + productToBeDeleted.getArticleNumber())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void givenNoReview_whenDeleteReview_thenStatusNotFound() throws Exception {
-        given(productrepository.findProductsByStoreNameAndArticleNumber("badStore", "badArticleNumber")).willReturn(null);
+    public void givenNoReview_whenDeleteProductByArticleNumber_thenStatusNotFound() throws Exception {
+        given(productrepository.findProductsByArticleNumber("badArticleNumber")).willReturn(null);
 
-        mockMvc.perform(delete("/product/store/badStore/article/badArticleNumber")
+        mockMvc.perform(delete("/product/badArticleNumber")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }

@@ -1,32 +1,44 @@
 package com.example.productsservice.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.*;
 
-@Document(collection = "products")
+
+@Entity
+@Table(name = "product")
 public class Product {
 
     @Id
-    private String id;
-    private String storeName;
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="id")
+
+    private int id;
+    @Column(name="name")
     private String name;
+    @Column(name="category")
     private String category;
+    @Column(name="description")
     private String description;
+    @Column(name="image")
     private String image;
+    @Column(name="articleNumber")
     private String articleNumber;
+    @Column(name="delivery")
     private Boolean delivery;
+    @Column(name="material")
     private String material;
+    @Column(name="maintenance")
     private String maintenance;
+    @Column(name="environment")
     private String environment;
-    private int stock;
+    @Column(name="price")
     private double price;
+    @Column(name="size")
     private String size;
 
     public Product() {
     }
 
-    public Product(String storeName, String name, String category, String description, String image, String articleNumber, Boolean delivery, String material, String maintenance, String environment, int stock, double price, String size) {
-        setStoreName(storeName);
+    public Product(String name, String category, String description, String image, String articleNumber, Boolean delivery, String material, String maintenance, String environment, double price, String size) {
         setName(name);
         setCategory(category);
         setDescription(description);
@@ -36,25 +48,16 @@ public class Product {
         setMaterial(material);
         setMaintenance(maintenance);
         setEnvironment(environment);
-        setStock(stock);
         setPrice(price);
         setSize(size);
     }
 
-    public String getId(){
+    public int getId(){
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
-    }
-
-    public String getStoreName(){
-        return storeName;
-    }
-
-    public void setStoreName(String storeName) {
-        this.storeName = storeName;
     }
 
 
@@ -129,13 +132,6 @@ public class Product {
         this.environment = environment;
     }
 
-    public int getStock(){
-        return stock;
-    }
-
-    public void setStock(int stock) {
-        this.stock = stock;
-    }
 
     public double getPrice(){
         return price;

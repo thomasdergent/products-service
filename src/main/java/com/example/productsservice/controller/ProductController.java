@@ -32,24 +32,23 @@ public class ProductController {
 //        return productRepository.findAllByCategory();
 //    }
 
-    //Get specific product from specific store
-    @GetMapping("/store/{storeName}/article/{articleNumber}")
-    public Product getProductByStoreNameAndArticleNumber(@PathVariable String storeName, @PathVariable String articleNumber) {
-        return productRepository.findProductsByStoreNameAndArticleNumber(storeName, articleNumber);
+    //Get specific product
+    @GetMapping("product/{articleNumber}")
+    public Product getProductByArticleNumber(@PathVariable String articleNumber) {
+        return productRepository.findProductsByArticleNumber(articleNumber);
     }
 
-    //Get all products from specific store
-    @GetMapping("/products/{storeName}")
-    public List<Product> getProductsByStoreName(@PathVariable String storeName) {
 
-        return productRepository.findProductsByStoreName(storeName);
+    @GetMapping("/products")
+    public List<Product> getAllProducts() {
+        return this.productRepository.findAll();
     }
 
     //Get all products from specific category
-    @GetMapping("/store/{storeName}/category/{category}")
-    public List<Product> getProductsByCategory(@PathVariable String storeName, @PathVariable String category) {
+    @GetMapping("/products/category/{category}")
+    public List<Product> getProductsByCategory(@PathVariable String category) {
 
-        return productRepository.findProductByStoreNameAndAndCategory(storeName, category);
+        return productRepository.findProductsByCategory(category);
     }
 
 //
@@ -107,11 +106,10 @@ public class ProductController {
 //    }
 
     //Update specific product from specific store
-    @PutMapping("/store/{storeName}/article/{articleNumber}")
-    public Product edit(@PathVariable String storeName, @PathVariable String articleNumber, @RequestBody Product updatedProduct) {
-        Product retrivedProduct = productRepository.findProductsByStoreNameAndArticleNumber(storeName, articleNumber);
+    @PutMapping("/product/{articleNumber}")
+    public Product edit(@PathVariable String articleNumber, @RequestBody Product updatedProduct) {
+        Product retrivedProduct = productRepository.findProductsByArticleNumber(articleNumber);
 
-        retrivedProduct.setStoreName(updatedProduct.getStoreName());
         retrivedProduct.setName((updatedProduct.getName()));
         retrivedProduct.setCategory((updatedProduct.getCategory()));
         retrivedProduct.setDescription((updatedProduct.getDescription()));
@@ -121,7 +119,6 @@ public class ProductController {
         retrivedProduct.setMaterial((updatedProduct.getMaterial()));
         retrivedProduct.setMaintenance(updatedProduct.getMaintenance());
         retrivedProduct.setEnvironment((updatedProduct.getEnvironment()));
-        retrivedProduct.setStock((updatedProduct.getStock()));
         retrivedProduct.setPrice((updatedProduct.getPrice()));
         retrivedProduct.setSize((updatedProduct.getSize()));
 
@@ -131,9 +128,9 @@ public class ProductController {
     }
 
     //Delete specific product from specific store
-    @DeleteMapping("/product/store/{storeName}/article/{articleNumber}")
-    public ResponseEntity deleteProduct(@PathVariable String storeName, @PathVariable String articleNumber) {
-        Product product = productRepository.findProductsByStoreNameAndArticleNumber(storeName, articleNumber);
+    @DeleteMapping("/product/{articleNumber}")
+    public ResponseEntity deleteProduct(@PathVariable String articleNumber) {
+        Product product = productRepository.findProductsByArticleNumber(articleNumber);
 
         if (product != null) {
             productRepository.delete(product);
