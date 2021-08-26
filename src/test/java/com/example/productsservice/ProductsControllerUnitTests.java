@@ -34,7 +34,7 @@ public class ProductsControllerUnitTests {
     private ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    public void givenProduct_whenGetProductByArticleNumber_thenReturnJsonProduct() throws Exception {
+    public void whenGetProductByArticleNumber_thenReturnJsonProduct() throws Exception {
 
         Product product1 = new Product("Linmon chair", "Bureaustoel", "omschrijving", "afbeelding", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 200.00, "130cm");
 
@@ -57,7 +57,7 @@ public class ProductsControllerUnitTests {
     }
 
     @Test
-    public void givenProduct_whenGetProducts_thenReturnJsonProducts() throws Exception {
+    public void whenGetProducts_thenReturnJsonProducts() throws Exception {
 
         Product product1 = new Product("Linmon chair", "Bureaustoel", "omschrijving", "afbeelding", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 200.00, "130cm");
         Product product2 = new Product("Linmon desk", "Bureau", "omschrijving", "afbeelding", "unitTest456", true, "Hout", "Vochtbestendig", "Recycleerbaar", 75.00, "140cmx80cm");
@@ -97,7 +97,7 @@ public class ProductsControllerUnitTests {
     }
 
     @Test
-    public void givenProduct_whenGetProductsByCategory_thenReturnJsonProducts() throws Exception {
+    public void whenGetProductsByCategory_thenReturnJsonProducts() throws Exception {
 
         Product product1 = new Product("Linmon chair", "Bureaustoel",  "omschrijving", "afbeelding", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 200.00, "130cm");
         Product product2 = new Product("Alexa chair", "Bureaustoel","omschrijving", "afbeelding", "unitTest456", true, "Stof", "Spray", "Recycleerbaar", 75.00, "140cm");
@@ -160,7 +160,7 @@ public class ProductsControllerUnitTests {
     }
 
     @Test
-    public void givenProduct_whenPutProductByArticleNumber_thenReturnJsonProduct() throws Exception {
+    public void whenPutProductByArticleNumber_thenReturnJsonProduct() throws Exception {
         Product product1 = new Product("Linmon chair", "Bureaustoel","omschrijving", "afbeelding", "unitTest123", true, "Leer", "Spray", "Recycleerbaar", 200.00, "130cm");
 
         given(productrepository.findProductsByArticleNumber("unitTest123")).willReturn(product1);
@@ -186,7 +186,7 @@ public class ProductsControllerUnitTests {
     }
 
     @Test
-    public void givenProduct_whenDeleteProductByArticleNumber_thenStatusOk() throws Exception {
+    public void whenDeleteProductByArticleNumber_thenStatusOk() throws Exception {
         Product productToBeDeleted = new Product("Linmon chair", "Bureaustoel","omschrijving", "afbeelding", "delete", true, "Leer", "Spray", "Recycleerbaar", 200.00, "130cm");
 
 
@@ -198,7 +198,7 @@ public class ProductsControllerUnitTests {
     }
 
     @Test
-    public void givenNoReview_whenDeleteProductByArticleNumber_thenStatusNotFound() throws Exception {
+    public void whenDeleteProductByArticleNumber_thenStatusNotFound() throws Exception {
         given(productrepository.findProductsByArticleNumber("badArticleNumber")).willReturn(null);
 
         mockMvc.perform(delete("/product/badArticleNumber")

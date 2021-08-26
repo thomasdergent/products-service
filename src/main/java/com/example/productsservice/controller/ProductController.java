@@ -15,30 +15,13 @@ public class ProductController {
     @Autowired
     private ProductRepository productRepository;
 
-//    @GetMapping("product/{articleNumber")
-//    public Product getProductByArticleNumber(@PathVariable String articleNumber) {
-//        return this.productRepository.findProductByArticleNumber(articleNumber);
-//    }
-
-//    @GetMapping("/products")
-//    public List<Product> getAllProducts() {
-//        return this.productRepository.findAll();
-//    }
-//
-
-//    @GetMapping("/category")
-//    public List<Product> cat() {
-//
-//        return productRepository.findAllByCategory();
-//    }
-
     //Get specific product
     @GetMapping("product/{articleNumber}")
     public Product getProductByArticleNumber(@PathVariable String articleNumber) {
         return productRepository.findProductsByArticleNumber(articleNumber);
     }
 
-
+    //Get all products
     @GetMapping("/products")
     public List<Product> getAllProducts() {
         return this.productRepository.findAll();
@@ -51,30 +34,6 @@ public class ProductController {
         return productRepository.findProductsByCategory(category);
     }
 
-//
-//    //Add product
-//    @PostMapping("/product/{storeName}")
-//    public Product addProduct(@PathVariable String storeName, @RequestBody Product product) {
-//
-//        Product newProduct = new Product();
-//
-//        newProduct.setStoreName(storeName);
-//        newProduct.setName((product.getName()));
-//        newProduct.setCategory((product.getCategory()));
-//        newProduct.setArticleNumber((product.getArticleNumber()));
-//        newProduct.setDelivery((product.getDelivery()));
-//        newProduct.setMaterial((product.getMaterial()));
-//        newProduct.setMaintenance(product.getMaintenance());
-//        newProduct.setEnvironment((product.getEnvironment()));
-//        newProduct.setStock((product.getStock()));
-//        newProduct.setPrice((product.getPrice()));
-//        newProduct.setSize((product.getSize()));
-//
-//        productRepository.save(newProduct);
-//
-//        return newProduct;
-//    }
-
     //Add product
     @PostMapping("/product")
     public Product addProduct(@RequestBody Product product) {
@@ -84,28 +43,7 @@ public class ProductController {
         return product;
     }
 
-//    @PutMapping("/product")
-//    public Product updateProduct(@RequestBody Product updatedProduct) {
-//        Product retrivedProduct = productRepository.findProductsByStoreNameAndArticleNumber(updatedProduct.getStoreName(), updatedProduct.getArticleNumber());
-//
-//        retrivedProduct.setStoreName((updatedProduct.getStoreName()));
-//        retrivedProduct.setName((updatedProduct.getName()));
-//        retrivedProduct.setCategory((updatedProduct.getCategory()));
-//        retrivedProduct.setArticleNumber((updatedProduct.getArticleNumber()));
-//        retrivedProduct.setDelivery((updatedProduct.getDelivery()));
-//        retrivedProduct.setMaterial((updatedProduct.getMaterial()));
-//        retrivedProduct.setMaintenance(updatedProduct.getMaintenance());
-//        retrivedProduct.setEnvironment((updatedProduct.getEnvironment()));
-//        retrivedProduct.setStock((updatedProduct.getStock()));
-//        retrivedProduct.setPrice((updatedProduct.getPrice()));
-//        retrivedProduct.setSize((updatedProduct.getSize()));
-//
-//        productRepository.save(retrivedProduct);
-//
-//        return retrivedProduct;
-//    }
-
-    //Update specific product from specific store
+    //Update product
     @PutMapping("/product/{articleNumber}")
     public Product edit(@PathVariable String articleNumber, @RequestBody Product updatedProduct) {
         Product retrivedProduct = productRepository.findProductsByArticleNumber(articleNumber);
@@ -127,7 +65,7 @@ public class ProductController {
         return retrivedProduct;
     }
 
-    //Delete specific product from specific store
+    //Delete product
     @DeleteMapping("/product/{articleNumber}")
     public ResponseEntity deleteProduct(@PathVariable String articleNumber) {
         Product product = productRepository.findProductsByArticleNumber(articleNumber);

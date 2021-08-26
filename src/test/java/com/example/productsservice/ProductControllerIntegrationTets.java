@@ -45,7 +45,7 @@ public class ProductControllerIntegrationTets {
 
     @AfterEach
     public void afterAllTests() {
-        //Watch out with deleteAll() methods when you have other data in the test database!
+
         productRepository.deleteAll();
     }
 
